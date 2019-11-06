@@ -7,6 +7,7 @@ const getAll = (request, response) => {
 
 
 const add = (request, response) =>{
+  
   model.agenda.contatos.push(request.body)
   response.status(200).send("Cadastrado com sucesso!")
 }
