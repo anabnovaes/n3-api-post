@@ -11,27 +11,31 @@ const add = (request, response) => {
   let dadosContato = request.body;
   // gravando o nome do contato do JSON em uma variável
   let nomeContato = request.body.nome;
-  // incluindo um ID no JSON do request
-  dadosContato.id = Math.random().toString(36).substr(-8);
-  //criando um array vazio para utilizar na verificação dos dados
-  const arrVerificacoes = []
-  // verificando se o nome já é existente nos nomes gravados
-  model.agenda.contatos.forEach(contato => {
-    const resultado = contato.nome.indexOf(nomeContato);
-    if (resultado != -1) {
-      arrVerificacoes.push(resultado)
-      response.status(200).send("Nome já cadastrado!")
-    }
-  });
-  // verificando se o nome é válido
-  if(typeof(dadosContato.nome) != "String" || dadosContato === ""){
-    arrVerificacoes.push(-1);
-  }
+  // incluindo data de nascimento em uma variavel
+  let dataNascimento = request.body.dataNascimento;
+
+
+  // incluindo  
+  //dadosContato.id = Math.random().toString(36).substr(-8);
+  dadosContato.id = model.agenda.contatos.length +1; 
   
 
+
+  //verificando duplicidades no nome do contato
+  const verificarDivergencias = model.agenda.contatos.filter(contato => contato.nome === nomeContato);
+  
+
+  // verificando se o nome é uma string ou está vazio
+  const verificarNome = verificarString(nomeContato)
+  if(!verificarNome){
+    verificarDivergencias.push[verificarNome]
+  }
+
   // adicionando os dados apenas se a array de comparação estiver vazia 
-  if (arrVerificacoes.length === 0) {
+  if (verificarDivergencias.length === 0 ) {
     model.agenda.contatos.push(dadosContato)
+  }else {
+    response.send("Usuário já existe!")
   }
 
 
